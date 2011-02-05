@@ -25,11 +25,13 @@ var extension = {
   },
   
   showGrowls: function() {
-    extension.injectScript();
-    var head = window.content.document.getElementsByTagName('head')[0];
-    var growl = window.content.document.createElement('script');
-    growl.innerHTML = "new TBZZ.Growl({token: '2313d3858ac9077e1429906d12fd57b1'})";
-    head.appendChild(growl);
+    if(window.content.document.location.protocol == 'http:' && !window.content.location.hostname.match(/(?:^|\.)(?:facebook|twitter)\.com$/)) {
+      extension.injectScript();
+      var head = window.content.document.getElementsByTagName('head')[0];
+      var growl = window.content.document.createElement('script');
+      growl.innerHTML = "new TBZZ.Growl({token: '2313d3858ac9077e1429906d12fd57b1'})";
+      head.appendChild(growl);
+    }
   },
   
   hideGrowls: function() {
@@ -60,10 +62,8 @@ var extension = {
 
   onPageLoad: function(aEvent) {
     var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-    if(enabled && doc == window.content.document) {
-      if (doc.location.protocol == 'http:') {
-        extension.updateGrowl();
-      }
+    if (enabled && doc == window.content.document) {
+      extension.updateGrowl();
     }
   },
   
