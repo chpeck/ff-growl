@@ -28,10 +28,12 @@ var myExtension = {
      head.appendChild(growl);
   },
 
-  onPageLoad: function(aEvent) {    
+  onPageLoad: function(aEvent) {
     var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-    if (!myExtension.hasScript(buzz_js)) {
-      myExtension.injectScript();
+    if (doc.location.protocol == 'http:') {
+      if (!myExtension.hasScript(buzz_js)) {
+        myExtension.injectScript();
+      }
     }
   },
   
