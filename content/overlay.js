@@ -1,23 +1,31 @@
-window.addEventListener("load", function() { extension.init(); }, false);
 var buzz_js = 'http://thingbuzz.com/embed/buzz.js';
-var enabled = 0;
+var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
 var extension = {
   init: function() {
     var appcontent = document.getElementById("appcontent");   // browser
     if(appcontent) {
       appcontent.addEventListener("DOMContentLoaded", extension.onPageLoad, true);
     }
-    extension.toggle();
+    extension.updateIcon();
+    extension.updateGrowl();
+  },
+  
+  enabled: function() {
+    return prefs.getBoolPref('enabled', true);
+  },
+  
+  updateIcon: function() {
+    document.getElementById('status-bar-icon').src = 'chrome://buzzgrowl/content/icon_' + (extension.enabled() ? '1' : '0') + '.png';
   },
   
   toggle: function() {
-    enabled = (enabled + 1) % 2;
-    document.getElementById('status-bar-icon').src = 'chrome://buzzgrowl/content/icon_' + enabled + '.png';
+    prefs.setBoolPref('enabled', !extension.enabled());
+    extension.updateIcon();
     extension.updateGrowl();
   },
   
   updateGrowl: function() {
-    if (enabled) {
+    if (extension.enabled()) {
       extension.showGrowls();
     } else {
       extension.hideGrowls();
@@ -62,7 +70,7 @@ var extension = {
 
   onPageLoad: function(aEvent) {
     var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-    if (enabled && doc == window.content.document) {
+    if (extension.enabled() && doc == window.content.document) {
       extension.updateGrowl();
     }
   },
@@ -71,3 +79,4 @@ var extension = {
     // do something
   }
 }
+window.addEventListener("load", function() { extension.init(); }, false);
