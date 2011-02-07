@@ -6,14 +6,21 @@ var extension = {
     if(appcontent) {
       appcontent.addEventListener("DOMContentLoaded", extension.onPageLoad, true);
     }
+    try {
+      prefs.getBoolPref('enabled');
+    } catch (err) {
+      alert('set to true ' );
+      prefs.setBoolPref('enabled', true)
+    }
+    
     extension.updateIcon();
     extension.updateGrowl();
   },
   
   enabled: function() {
-    return prefs.getBoolPref('enabled', true);
+    return prefs.getBoolPref('enabled');
   },
-  
+
   updateIcon: function() {
     document.getElementById('status-bar-icon').src = 'chrome://buzzgrowl/content/icon_' + (extension.enabled() ? '1' : '0') + '.png';
   },
