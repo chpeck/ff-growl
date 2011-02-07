@@ -1,44 +1,45 @@
 var buzz_js = 'http://thingbuzz.com/embed/buzz.js';
 var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
+
 var extension = {
   init: function() {
-    var appcontent = document.getElementById("appcontent");   // browser
+    var appcontent = document.getElementById("appcontent");
     if(appcontent) {
       appcontent.addEventListener("DOMContentLoaded", extension.onPageLoad, true);
     }
-    try {
-      prefs.getBoolPref('enabled');
-    } catch (err) {
-      alert('set to true ' );
-      prefs.setBoolPref('enabled', true)
+    prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    if (prefs.getPrefType('enabled') == 0) {
+      prefs.setBoolPref('enabled', true);
     }
-    
+    prefs.addObserver('enabled', this, false);
     extension.updateIcon();
-    extension.updateGrowl();
   },
-  
-  enabled: function() {
-    return prefs.getBoolPref('enabled');
+
+  observe: function(aSubject, aTopic, aData) {
+    if ("nsPref:changed" == aTopic) {
+      if(aData == 'enabled') {
+        extension.updateIcon();
+        extension.updateGrowl();
+      }
+    }
   },
 
   updateIcon: function() {
-    document.getElementById('status-bar-icon').src = 'chrome://buzzgrowl/content/icon_' + (extension.enabled() ? '1' : '0') + '.png';
+    document.getElementById('status-bar-icon').src = 'chrome://buzzgrowl/content/icon_' + (prefs.getBoolPref('enabled') ? '1' : '0') + '.png';
   },
-  
+
   toggle: function() {
-    prefs.setBoolPref('enabled', !extension.enabled());
-    extension.updateIcon();
-    extension.updateGrowl();
+    prefs.setBoolPref('enabled', !prefs.getBoolPref('enabled'));
   },
-  
+
   updateGrowl: function() {
-    if (extension.enabled()) {
+    if (prefs.getBoolPref('enabled')) {
       extension.showGrowls();
     } else {
       extension.hideGrowls();
     }
   },
-  
+
   showGrowls: function() {
     if(window.content.document.location.protocol == 'http:' && !window.content.location.hostname.match(/(?:^|\.)(?:facebook|twitter)\.com$/)) {
       extension.injectScript();
@@ -48,14 +49,14 @@ var extension = {
       head.appendChild(growl);
     }
   },
-  
+
   hideGrowls: function() {
     var growl_divs = window.content.document.getElementsByClassName('buzz_growl');
     for (var i=0; i<growl_divs.length; i++) {
       growl_divs[i].parentNode.removeChild(growl_divs[i]);
     }
   },
-  
+
   hasScript: function(script_url) {
     var script_tags = window.content.document.getElementsByTagName('script');
     for (var i=0; i<script_tags.length; i++) {
@@ -77,13 +78,10 @@ var extension = {
 
   onPageLoad: function(aEvent) {
     var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-    if (extension.enabled() && doc == window.content.document) {
+    if (prefs.getBoolPref('enabled') && doc == window.content.document) {
+      extension.updateIcon();
       extension.updateGrowl();
     }
   },
-  
-  onPageUnload: function(aEvent) {
-    // do something
-  }
 }
 window.addEventListener("load", function() { extension.init(); }, false);
