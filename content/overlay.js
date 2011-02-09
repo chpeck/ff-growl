@@ -1,4 +1,4 @@
-var buzz_js = 'http://thingbuzz.com/embed/buzz.js';
+var buzz_js = 'http://buzzgrowl.com/embed/buzz.js';
 var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
 
 var extension = {
