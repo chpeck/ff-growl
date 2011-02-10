@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<?xml-stylesheet href="chrome://buzzgrowl/content/style.css" type="text/css"?>
-<overlay id="buzzgrowlOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://buzzgrowl/content/overlay.js"/>
-  <statusbar id="status-bar">
-    <statusbarpanel id="status-bar-icon" class="statusbarpanel-iconic" src="chrome://buzzgrowl/content/icon_1.png" onclick="extension.toggle()"/>
-  </statusbar>
-</overlay>

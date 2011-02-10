@@ -1,2 +1,2 @@
 content buzzgrowl content/
-overlay chrome://browser/content/browser.xul chrome://buzzgrowl/content/overlay.xul
+overlay chrome://browser/content/browser.xul chrome://buzzgrowl/content/buzzgrowl.xul
