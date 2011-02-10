@@ -1,23 +1,31 @@
 var buzz_js = 'http://buzzgrowl.com/embed/buzz.js';
 var old_buzz_js = 'http://thingbuzz.com/embed/buzz.js';
-var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
+var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
 
 var extension = {
   init: function() {
-    var appcontent = document.getElementById("appcontent");
+    var appcontent = document.getElementById('appcontent');
     if(appcontent) {
-      appcontent.addEventListener("DOMContentLoaded", extension.onPageLoad, true);
+      appcontent.addEventListener('DOMContentLoaded', extension.onPageLoad, true);
     }
     prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
     if (prefs.getPrefType('enabled') == 0) {
       prefs.setBoolPref('enabled', true);
     }
+    prefs.setCharPref('currentVersion', extension.getVersion('apps@thingbuzz.com'));
     prefs.addObserver('enabled', this, false);
     extension.updateIcon();
   },
 
+  getVersion: function(addonID) {
+    var extMan = Components.classes['@mozilla.org/extensions/manager;1'].getService(Components.interfaces.nsIExtensionManager);
+    var ext = extMan.getItemForID(addonID);
+    ext.QueryInterface(Components.interfaces.nsIUpdateItem);
+    return ext.version;
+  },
+
   observe: function(aSubject, aTopic, aData) {
-    if ("nsPref:changed" == aTopic) {
+    if ('nsPref:changed' == aTopic) {
       if(aData == 'enabled') {
         extension.updateIcon();
         extension.updateGrowl();
