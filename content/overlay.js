@@ -1,7 +1,6 @@
 var buzz_js = 'http://buzzgrowl.com/embed/buzz.js';
 var old_buzz_js = 'http://thingbuzz.com/embed/buzz.js';
-var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
-
+var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.buzzgrowl.');
 var extension = {
   init: function() {
     var appcontent = document.getElementById('appcontent');
