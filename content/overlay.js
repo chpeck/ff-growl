@@ -1,4 +1,5 @@
 var buzz_js = 'http://buzzgrowl.com/embed/buzz.js';
+var old_buzz_js = 'http://thingbuzz.com/embed/buzz.js';
 var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch).getBranch('extensions.buzzgrowl.');
 
 var extension = {
@@ -68,7 +69,7 @@ var extension = {
   },
 
   injectScript: function() {
-    if(!extension.hasScript(buzz_js)) {
+    if(!extension.hasScript(buzz_js) && !extension.hasScript(old_buzz_js)) {
       var head = window.content.document.getElementsByTagName('head')[0];
       var buzz = window.content.document.createElement('script');
       buzz.src = buzz_js;
