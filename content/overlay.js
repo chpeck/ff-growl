@@ -74,7 +74,7 @@ var extension = {
   hasScript: function(script_url) {
     var script_tags = window.content.document.getElementsByTagName('script');
     for (var i=0; i<script_tags.length; i++) {
-      if (script_tags[i].src == script_url) {
+      if (script_tags[i].src.indexOf(script_url) == 0){
         break;
       }
     }
@@ -94,7 +94,7 @@ var extension = {
     var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
     if (prefs.getBoolPref('enabled') && doc == window.content.document) {
       extension.updateIcon();
-      if (!extension.hasScript(buzz_js) && !extension.hasScript(old_buzz_js)) {
+      if(!extension.hasScript(buzz_js) && !extension.hasScript(old_buzz_js)) {
         extension.updateGrowl();
       }
     }
