@@ -23,10 +23,10 @@ top.BuzzGrowl = {
   },
 
   getVersion: function(addonID) {
-    var extMan = Cc['@mozilla.org/extensions/manager;1'].getService(Ci.nsIExtensionManager);
-    var ext = extMan.getItemForID(addonID);
-    ext.QueryInterface(Ci.nsIUpdateItem);
-    return ext.version;
+    var extMan = Cc['@mozilla.org/extensions/manager;1'].getService(Ci.nsIExtensionManager);
+    var ext = extMan.getItemForID(addonID);
+    ext.QueryInterface(Ci.nsIUpdateItem);
+    return ext.version;
   },
 
   observe: function(aSubject, aTopic, aData) {
