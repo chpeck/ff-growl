@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-  <RDF:Description about="urn:mozilla:extension:apps@@thingbuzz.com">
-    <em:updates>
-      <RDF:Seq>
-        <RDF:li>
-          <RDF:Description>
-            <em:version>1.0</em:version>
-            <em:targetApplication>
-              <RDF:Description>
-                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-                <em:minVersion>3.6</em:minVersion>
-                <em:maxVersion>3.6.*</em:maxVersion>
-                <!-- This is where this version of the add-on will be downloaded from -->
-                <em:updateLink>https://ff-growl.s3.amazonaws.com/ff-growl.xpi</em:updateLink>
-                <em:updateInfoURL>https://ff-growl.s3.amazonaws.com//updateinfo.xhtml</em:updateInfoURL>
-              </RDF:Description>
-            </em:targetApplication>
-          </RDF:Description>
-        </RDF:li>
-      </RDF:Seq>
-    </em:updates>
-  </RDF:Description>
-</RDF:RDF>
+<?xml version="1.0"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns="http://www.mozilla.org/2004/em-rdf#">
+  <r:Description about="urn:mozilla:extension:apps@thingbuzz.com">
+    <updates>
+      <r:Seq>
+        <r:li>
+          <r:Description>
+            <version>1.0</version>
+            <targetApplication>
+              <r:Description>
+                <id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</id>
+                <minVersion>3.6</minVersion>
+                <maxVersion>3.6.*</maxVersion>
+                <updateLink>https://ff-growl.s3.amazonaws.com/ff-growl.xpi</updateLink>
+              </r:Description>
+            </targetApplication>
+          </r:Description>
+        </r:li>
+      </r:Seq>
+    </updates>
+  </r:Description>
+</r:RDF>
