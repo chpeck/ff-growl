@@ -9,6 +9,7 @@
     <em:creator>Thingbuzz</em:creator>
     <em:homepageURL>http://buzzgrowl.com</em:homepageURL>
     <em:iconURL>chrome://buzzgrowl/content/icon36.png</em:iconURL>
+    <em:updateURL>https://ff-growl.s3.amazonaws.com/update.xpi</em:updateURL>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
